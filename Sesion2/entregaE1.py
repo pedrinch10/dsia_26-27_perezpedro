@@ -4,9 +4,9 @@ import json
 
 import pandas as pd
 
-RUTA_CSV = "datos/ventas.csv"
-RUTA_CSV_LIMPIO = "datos/ventas_limpias.csv"
-RUTA_JSON_CALIDAD = "datos/calidad_datos.json"
+RUTA_CSV = "../datos/ventas.csv"
+RUTA_CSV_LIMPIO = "../datos/ventas_limpias.csv"
+RUTA_JSON_CALIDAD = "../datos/calidad_datos.json"
 
 
 def diagnosticar(frame: pd.DataFrame) -> None:

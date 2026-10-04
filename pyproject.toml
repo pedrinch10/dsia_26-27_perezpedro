@@ -1,0 +1,23 @@
+[project]
+name = "dsia-26-27-perezpedro"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Pedro Perez", email = "pedroperezdiaz1@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=3.0.6",
+    "pathlib>=1.0.1",
+    "pytest>=9.1.1",
+]
+
+[project.scripts]
+dsia-26-27-perezpedro = "dsia_26_27_perezpedro:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
+[tool.uv]
+package = false
