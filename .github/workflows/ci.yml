@@ -23,4 +23,4 @@ jobs:
       - name: Ejecutar tests con cobertura
         run: |
           cd proyecto_i
-          pytest --cov=ventas_app --cov=internet_app --cov-report=term-missing --cov-fail-under=60
+          pytest --cov=ventas_app --cov=internet_app --cov-report=term-missing --cov-fail-under=100
