@@ -97,3 +97,15 @@ uv run pytest --cov=ventas_app --cov=internet_app --cov-report=term-missing --co
 `.github/workflows/ci.yml` corre en cada push a `main` y en cada pull request: instala
 `proyecto_i/requirements.txt` con Python 3.12 y ejecuta la suite de tests con cobertura
 mínima del 60%.
+
+Workflow: `.github/workflows/ci.yml`
+
+Comando que ejecuta el CI (reproducible en local desde `proyecto_i/`):
+
+```bash
+pytest -q --cov=ventas_app --cov=internet_app --cov-report=term-missing --cov-fail-under=60
+```
+
+Enlace al último run verde: https://github.com/pedrinch10/dsia_26-27_perezpedro/actions/runs/37350834004
+
+![CI](https://github.com/pedrinch10/dsia_26-27_perezpedro/actions/workflows/ci.yml/badge.svg)
