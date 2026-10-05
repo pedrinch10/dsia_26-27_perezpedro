@@ -1,0 +1,26 @@
+name: CI - Proyecto I
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r proyecto_i/requirements.txt
+
+      - name: Ejecutar tests con cobertura
+        run: |
+          cd proyecto_i
+          pytest --cov=ventas_app --cov=internet_app --cov-report=term-missing --cov-fail-under=60
