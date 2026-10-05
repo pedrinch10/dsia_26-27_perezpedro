@@ -1,0 +1,141 @@
+region,product,units,unit_price
+Sur,Cable Kit,7.0,12.5
+Oeste,Gateway,25.0,120.0
+Oeste,Hub IoT,1.0,88.96
+Norte,Hub IoT,15.0,85.0
+Este,Cable Kit,22.0,12.5
+Este,Gateway,20.0,120.0
+Este,Hub IoT,16.0,85.0
+Oeste,Sensor B,18.0,32.0
+Norte,Sensor A,7.0,19.5
+Norte,Hub IoT,16.0,85.0
+Norte,Hub IoT,2.0,85.0
+Norte,Sensor B,9.0,32.0
+Norte,Sensor A,5.0,19.5
+Sur,Sensor B,6.0,32.0
+Este,Hub IoT,23.0,88.04
+Sur,Cable Kit,22.0,12.5
+Norte,Gateway,5.0,120.0
+Norte,Sensor A,10.0,19.5
+Oeste,Gateway,4.0,120.0
+Este,Sensor A,9.0,19.5
+Oeste,Hub IoT,12.0,85.0
+Oeste,Cable Kit,2.0,12.5
+Sur,Hub IoT,2.0,85.0
+Sur,Cable Kit,13.0,12.5
+Norte,Sensor A,9.0,19.5
+Sur,Sensor A,17.0,19.5
+Norte,Sensor B,11.0,32.0
+Este,Sensor B,22.0,32.0
+Sur,Sensor A,20.0,19.5
+Norte,Sensor B,2.0,32.0
+Norte,Hub IoT,20.0,83.72
+Este,Cable Kit,10.0,12.5
+Norte,Gateway,8.0,120.0
+Oeste,Cable Kit,11.0,12.5
+Este,Gateway,16.0,120.0
+Norte,Gateway,20.0,120.0
+Norte,Hub IoT,7.0,85.0
+Este,Sensor A,12.0,19.5
+Norte,Sensor A,13.0,19.5
+Sur,Hub IoT,19.0,83.74
+Este,Hub IoT,9.0,83.38
+Este,Hub IoT,23.0,85.0
+Norte,Cable Kit,3.0,12.5
+Oeste,Cable Kit,1.0,12.5
+Sur,Sensor A,10.0,19.5
+Norte,Sensor A,7.0,19.5
+Norte,Cable Kit,12.0,12.5
+Este,Hub IoT,21.0,85.0
+Este,Hub IoT,10.0,85.0
+Norte,Cable Kit,2.0,12.5
+Este,Gateway,16.0,120.0
+Sur,Cable Kit,2.0,12.5
+Norte,Sensor A,3.0,19.59
+Sur,Cable Kit,16.0,12.5
+Norte,Sensor A,24.0,19.5
+Norte,Sensor B,6.0,32.0
+Norte,Cable Kit,2.0,12.48
+Sur,Sensor A,22.0,19.5
+Sur,Sensor B,15.0,31.79
+Este,Sensor B,9.0,32.0
+Norte,Gateway,13.0,120.0
+Este,Gateway,18.0,120.0
+Norte,Hub IoT,17.0,85.0
+Este,Cable Kit,22.0,12.5
+Oeste,Sensor B,19.0,32.0
+Norte,Sensor A,1.0,19.0
+Oeste,Sensor A,5.0,19.5
+Este,Cable Kit,5.0,12.5
+Norte,Cable Kit,4.0,12.5
+Este,Cable Kit,17.0,12.5
+Este,Hub IoT,24.0,85.0
+Este,Hub IoT,19.0,85.0
+Este,Sensor A,3.0,19.5
+Sur,Gateway,21.0,120.0
+Sur,Cable Kit,24.0,13.08
+Este,Sensor A,24.0,19.5
+Oeste,Cable Kit,23.0,12.5
+Sur,Gateway,22.0,120.0
+Oeste,Gateway,8.0,120.0
+Este,Sensor B,19.0,33.5
+Este,Sensor B,3.0,30.73
+Sur,Cable Kit,15.0,12.48
+Este,Sensor A,15.0,19.5
+Sur,Sensor A,12.0,19.5
+Norte,Cable Kit,12.0,12.5
+Oeste,Gateway,10.0,120.0
+Sur,Gateway,20.0,120.0
+Oeste,Cable Kit,23.0,12.5
+Este,Hub IoT,4.0,85.0
+Oeste,Sensor B,12.0,32.0
+Norte,Sensor B,22.0,32.0
+Este,Gateway,13.0,120.0
+Este,Hub IoT,4.0,85.0
+Norte,Gateway,4.0,120.0
+Oeste,Cable Kit,16.0,12.5
+Norte,Sensor B,12.0,32.0
+Norte,Sensor A,7.0,19.5
+Sur,Cable Kit,14.0,12.5
+Norte,Gateway,5.0,120.0
+Oeste,Hub IoT,15.0,85.0
+Sur,Gateway,11.0,120.0
+Este,Sensor B,20.0,32.0
+Oeste,Hub IoT,23.0,84.3
+Norte,Sensor B,5.0,32.0
+Oeste,Gateway,21.0,120.0
+Norte,Hub IoT,22.0,85.0
+Sur,Sensor B,20.0,32.0
+Norte,Cable Kit,4.0,12.5
+Sur,Gateway,12.0,120.0
+Norte,Gateway,4.0,120.0
+Este,Sensor A,24.0,19.5
+Sur,Sensor B,17.0,32.0
+Norte,Sensor B,1.0,32.0
+Sur,Sensor B,23.0,32.84
+Norte,Hub IoT,24.0,85.0
+Oeste,Sensor A,3.0,19.5
+Sur,Sensor B,15.0,32.0
+Sur,Sensor A,9.0,19.5
+Este,Gateway,10.0,120.0
+Sur,Sensor A,13.0,19.5
+Norte,Cable Kit,11.0,12.5
+Este,Cable Kit,21.0,12.5
+Oeste,Sensor B,25.0,33.53
+Este,Cable Kit,25.0,12.5
+Este,Gateway,9.0,120.0
+Este,Sensor B,10.0,32.0
+Sur,Sensor A,20.0,19.5
+Sur,Gateway,6.0,120.0
+Norte,Hub IoT,9.0,85.0
+Este,Gateway,16.0,120.0
+Oeste,Hub IoT,2.0,85.0
+Sur,Sensor B,24.0,32.0
+Norte,Cable Kit,13.0,12.5
+Sur,Cable Kit,17.0,12.5
+Sur,Sensor A,20.0,19.5
+Oeste,Hub IoT,11.0,85.0
+Sur,Sensor A,16.0,19.5
+Oeste,Hub IoT,19.0,85.0
+Oeste,Sensor B,9.0,32.0
+Oeste,Sensor B,5.0,32.31
