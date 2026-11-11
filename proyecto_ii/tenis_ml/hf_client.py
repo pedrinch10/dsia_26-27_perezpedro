@@ -7,7 +7,7 @@ Mismo contrato para el modo real y el mock: el resto del pipeline solo conoce
 import os
 from typing import Protocol
 
-DEFAULT_HF_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+DEFAULT_HF_MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 
 
 class HFConfigError(Exception):

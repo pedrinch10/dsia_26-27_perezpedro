@@ -34,7 +34,7 @@ CSV ATP → validación → features → modelo sklearn → probabilidad → exp
 ## Resultados
 
 Generados por `python -m tenis_ml.cli train` y guardados en `reports/metrics.json`
-(ejecución del 11 de noviembre de 2026 con scikit-learn 1.9.1 y pandas 3.0.5; pueden variar
+(ejecución del 11 de noviembre de 2026 con scikit-learn 1.9.1, entorno `uv`; pueden variar
 ligeramente con otras versiones):
 
 | Métrica (test: temporada 2023, 2.904 partidos) | Valor |
@@ -50,15 +50,9 @@ No es una mejora demostrable: casi toda la señal está ya en el ranking. El val
 entrega es el pipeline reproducible (validación, features sin fuga, split temporal, modelo
 persistido e inferencia integrada); mejorar el modelo queda para el Proyecto III.
 
-<!-- PARA PEDRO: reejecuta `train` en tu entorno (uv) y confirma o actualiza estas cifras.
-     Decide si quieres añadir alguna mejora del modelo y justifícala con tus palabras. -->
-
 **Artefactos:** se versiona el informe `reports/metrics.json`. El modelo
 `models/tenis_model.joblib` se regenera con `train` (un `.joblib` depende de la versión de
 scikit-learn con la que se guardó, así que conviene reentrenar en cada entorno).
-
-<!-- PARA PEDRO: el enunciado admite "modelo entrenado y/o instrucciones claras para
-     reentrenar". Si prefieres subir también el .joblib, entrénalo con tu uv.lock y cambia este párrafo. -->
 
 ## Reglas de validación
 
@@ -69,13 +63,14 @@ Edad y altura pueden faltar (se imputan). Con el CSV real: 11.262 válidos y 180
 ## Hugging Face
 
 - **Tarea:** `chat_completion` (Inference API).
-- **Modelo:** `Qwen/Qwen2.5-7B-Instruct` por defecto, configurable con `HF_MODEL`.
-- **Estado:** el modo `mock` está probado. La llamada real al Hub está implementada pero
-  **pendiente de probar** con un `HF_TOKEN`.
-
-<!-- PARA PEDRO: crea tu .env con HF_TOKEN, ejecuta el comando 3 de "Cómo usarlo" y sustituye la
-     línea "Estado" por el resultado real. Si el modelo no responde, cambia HF_MODEL (guía B6.5;
-     el demo de aula usa mistralai/Mistral-7B-Instruct-v0.3) y actualiza README, AI_USAGE y .env.example. -->
+- **Modelo:** `meta-llama/Llama-3.1-8B-Instruct` por defecto, configurable con `HF_MODEL`. Se eligió porque
+  `Qwen/Qwen2.5-7B-Instruct` y `mistralai/Mistral-7B-Instruct-v0.3` ya no figuraban entre los
+  modelos servidos por Inference Providers el 11 de noviembre de 2026.
+- **Estado:** el modo `mock` está probado (tests y CI). En la prueba real del 11 de noviembre
+  de 2026 la petición llegó al servicio, el token se autenticó y el modelo fue aceptado, pero
+  la cuenta gratuita no tiene créditos de Inference Providers y respondió `402 Payment Required`.
+  Por tanto **no se ha obtenido una explicación real**. El cliente lo trata como `HFRequestError`
+  y el pipeline exporta igualmente las predicciones de sklearn (degradación controlada).
 - **Uso en el flujo:** explica en dos frases la probabilidad que da sklearn. No sustituye
   al modelo ni aporta datos nuevos.
 - **Cliente:** `ExplanationClient` (Protocol) con `MockExplanationClient` y
@@ -96,7 +91,8 @@ proyecto_ii/
 
 ## Cómo usarlo
 
-Desde `proyecto_ii/` (con las dependencias instaladas):
+Desde `proyecto_ii/`, con las dependencias instaladas (`uv sync` en la raíz del repositorio;
+anteponer `uv run` a cada comando):
 
 ```bash
 # 1. Entrenar y guardar modelo + métricas
@@ -132,6 +128,7 @@ pytest -q --cov=tenis_ml --cov-report=term-missing --cov-fail-under=60
 pytest -q -m "not integration"   # solo unitarios
 ```
 
+Resultado de la última ejecución local: 46 tests en verde y 98,7 % de cobertura.
 Los tests de integración usan el CSV real. El CI (`.github/workflows/ci_proyecto_ii.yml`,
 en la raíz del repositorio) ejecuta todo con cobertura mínima del 60 %.
 
