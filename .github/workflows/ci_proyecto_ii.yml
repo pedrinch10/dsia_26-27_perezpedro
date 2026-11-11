@@ -1,0 +1,26 @@
+name: CI - Proyecto II
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r proyecto_ii/requirements.txt
+
+      - name: Tests con cobertura (cliente HF siempre en mock, sin secretos)
+        run: |
+          cd proyecto_ii
+          pytest -q --cov=tenis_ml --cov-report=term-missing --cov-fail-under=60

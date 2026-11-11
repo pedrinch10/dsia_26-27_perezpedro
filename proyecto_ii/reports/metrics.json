@@ -1,0 +1,8 @@
+{
+  "train_rows": 8358,
+  "test_rows": 2904,
+  "test_season": 2023,
+  "accuracy": 0.6370523415977961,
+  "f1": 0.6414965986394557,
+  "baseline_accuracy_better_rank": 0.6318870523415978
+}
