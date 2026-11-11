@@ -6,9 +6,20 @@
 - **Qué generó:** la estructura del paquete `tenis_ml`, el código de `loader`, `validator`,
   `features`, `train`, `predict`, `hf_client`, `pipeline` y `cli`, los tests y los borradores
   de README y workflow de CI.
-- **Verificación:** la lógica de datos (validación y construcción de features) se comprobó
-  con el CSV real; el entrenamiento y los tests con scikit-learn se ejecutan en el entorno
-  local del autor y en el CI.
+- **Verificación:** el asistente ejecutó los tests (46 en verde), el entrenamiento y la
+  predicción en modo `mock` con el CSV real el 11 de noviembre de 2026 (scikit-learn 1.9.1,
+  pandas 3.0.5). No se ha probado la llamada real a Hugging Face.
+
+## Qué acepté y qué revisé
+
+<!-- PARA PEDRO: esta sección la pide el enunciado ("qué aceptaste") y debe ser tuya.
+     Sustituye el borrador por lo que hayas hecho de verdad. Guion orientativo:
+     - Ejecuté los tests y el entrenamiento en mi entorno (fecha, resultado).
+     - Revisé línea a línea: features.py, train.py, hf_client.py (lo que entendí o cambié).
+     - Decisiones mías: dominio y dataset de tenis, uso de HF para explicar la predicción.
+     - Probé el cliente real con el modelo X (o: pendiente por falta de token). -->
+
+- _Pendiente de redactar por el autor._
 
 ## Modelo de Hugging Face en el producto
 

@@ -29,8 +29,36 @@ CSV ATP → validación → features → modelo sklearn → probabilidad → exp
   escalado y one-hot) dentro de un único `Pipeline`, guardado con `joblib`.
 - **Evaluación:** split temporal. Entrena con las temporadas anteriores a 2023 y evalúa en 2023.
 - **Línea base:** "gana el mejor clasificado" acierta el 63,2 % de los partidos de 2023
-  (tras validar). El modelo debe mejorarla.
-- **Resultados:** `reports/metrics.json` (accuracy, F1 y línea base), generado por `train`.
+  (tras validar). Es la referencia con la que se compara el modelo.
+
+## Resultados
+
+Generados por `python -m tenis_ml.cli train` y guardados en `reports/metrics.json`
+(ejecución del 11 de noviembre de 2026 con scikit-learn 1.9.1 y pandas 3.0.5; pueden variar
+ligeramente con otras versiones):
+
+| Métrica (test: temporada 2023, 2.904 partidos) | Valor |
+| --- | --- |
+| Accuracy del modelo | 0,637 |
+| F1 del modelo | 0,641 |
+| Accuracy de la línea base (gana el mejor ranking) | 0,632 |
+
+Entrenamiento con 8.358 partidos (2019, 2021 y 2022).
+
+**Lectura honesta:** el modelo mejora la línea base en solo 0,5 puntos, con un único split.
+No es una mejora demostrable: casi toda la señal está ya en el ranking. El valor de esta
+entrega es el pipeline reproducible (validación, features sin fuga, split temporal, modelo
+persistido e inferencia integrada); mejorar el modelo queda para el Proyecto III.
+
+<!-- PARA PEDRO: reejecuta `train` en tu entorno (uv) y confirma o actualiza estas cifras.
+     Decide si quieres añadir alguna mejora del modelo y justifícala con tus palabras. -->
+
+**Artefactos:** se versiona el informe `reports/metrics.json`. El modelo
+`models/tenis_model.joblib` se regenera con `train` (un `.joblib` depende de la versión de
+scikit-learn con la que se guardó, así que conviene reentrenar en cada entorno).
+
+<!-- PARA PEDRO: el enunciado admite "modelo entrenado y/o instrucciones claras para
+     reentrenar". Si prefieres subir también el .joblib, entrénalo con tu uv.lock y cambia este párrafo. -->
 
 ## Reglas de validación
 
@@ -42,6 +70,12 @@ Edad y altura pueden faltar (se imputan). Con el CSV real: 11.262 válidos y 180
 
 - **Tarea:** `chat_completion` (Inference API).
 - **Modelo:** `Qwen/Qwen2.5-7B-Instruct` por defecto, configurable con `HF_MODEL`.
+- **Estado:** el modo `mock` está probado. La llamada real al Hub está implementada pero
+  **pendiente de probar** con un `HF_TOKEN`.
+
+<!-- PARA PEDRO: crea tu .env con HF_TOKEN, ejecuta el comando 3 de "Cómo usarlo" y sustituye la
+     línea "Estado" por el resultado real. Si el modelo no responde, cambia HF_MODEL (guía B6.5;
+     el demo de aula usa mistralai/Mistral-7B-Instruct-v0.3) y actualiza README, AI_USAGE y .env.example. -->
 - **Uso en el flujo:** explica en dos frases la probabilidad que da sklearn. No sustituye
   al modelo ni aporta datos nuevos.
 - **Cliente:** `ExplanationClient` (Protocol) con `MockExplanationClient` y
@@ -77,6 +111,20 @@ python -m tenis_ml.cli predict --season 2023 --explain 5 --client hf --output re
 
 Configuración: copia `.env.example` a `.env` y rellena `HF_TOKEN`. `.env` está en `.gitignore`.
 
+## Robustez: errores, logs y configuración
+
+- **Errores propios por capa:** `DataLoadError` (datos), `TrainingError` (split vacío),
+  `ModelNotFoundError` (falta entrenar), `HFConfigError` (falta `HF_TOKEN`) y
+  `HFRequestError` (fallo de la Inference API).
+- **CLI:** ante un error esperable escribe una línea `ERROR` en el log y termina con
+  código de salida 1, sin traceback.
+- **Degradación controlada:** si Hugging Face falla al explicar un partido, se registra un
+  `WARNING`, la explicación queda vacía y las predicciones de sklearn se exportan igualmente.
+- **Logs:** cada paso informa de filas cargadas, válidas y descartadas, métricas y ficheros
+  generados. El nivel se cambia con la variable `LOG_LEVEL` (por defecto `INFO`).
+- **Configuración:** rutas, semilla y temporada de test en `tenis_ml/config.py`; secretos
+  solo por variables de entorno.
+
 ## Tests
 
 ```bash
@@ -91,5 +139,6 @@ en la raíz del repositorio) ejecuta todo con cobertura mínima del 60 %.
 
 - API (p. ej. FastAPI) con endpoint de predicción y de explicación (`/analyze` o equivalente),
   reutilizando `predict.py` y `hf_client.py` sin tocarlos.
+- Interfaz web o dashboard de monitorización que consuma esa API (obligatorio en el III).
 - Despliegue y monitorización (logs, métricas de uso y de deriva de datos).
 - Mejores modelos y más temporadas de datos.

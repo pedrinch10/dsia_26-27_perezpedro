@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from .features import build_features
-from .hf_client import ExplanationClient
+from .hf_client import ExplanationClient, HFRequestError
 from .loader import CsvMatchRepository, MatchRepository
 from .predict import load_model, predict_proba
 from .train import save_artifacts, train_and_evaluate
@@ -49,8 +49,12 @@ def run_predict(
 
     for index in result.head(explain).index:
         context = {**features.loc[index].to_dict(), "prob_player_1_wins": result.at[index, "prob_player_1_wins"]}
-        result.at[index, "explanation"] = client.explain(context)
-        logger.info("Explicación generada para la fila %d", index)
+        try:
+            result.at[index, "explanation"] = client.explain(context)
+            logger.info("Explicación generada para la fila %d", index)
+        except HFRequestError as error:
+            # Degradación controlada: la predicción sklearn se exporta aunque falle el borde HF.
+            logger.warning("Sin explicación para la fila %d: %s", index, error)
 
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)

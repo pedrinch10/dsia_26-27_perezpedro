@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 
 from tenis_ml import cli
-from tenis_ml.hf_client import MockExplanationClient
+from tenis_ml.hf_client import HFRequestError, MockExplanationClient
 from tenis_ml.pipeline import run_predict, run_train
 from tenis_ml.predict import ModelNotFoundError
 
@@ -62,6 +62,46 @@ def test_cli_train_y_predict_de_extremo_a_extremo(raw_matches_csv, tmp_path, cap
 
     assert "Accuracy" in capsys.readouterr().out
     assert output.exists()
+
+
+class FailingClient:
+    """Simula un fallo del borde HF (p. ej. 429 o modelo no disponible)."""
+
+    def explain(self, context: dict) -> str:
+        raise HFRequestError("servicio no disponible")
+
+
+def test_run_predict_exporta_aunque_falle_la_explicacion(raw_matches_csv, trained, tmp_path, caplog):
+    model_path, _, _ = trained
+    output = tmp_path / "pred.csv"
+
+    with caplog.at_level("WARNING"):
+        result = run_predict(raw_matches_csv, model_path, output, FailingClient(), explain=2)
+
+    assert output.exists()
+    assert result["prob_player_1_wins"].between(0, 1).all()
+    assert (result["explanation"] == "").all()
+    assert "Sin explicación" in caplog.text
+
+
+def test_cli_sin_modelo_termina_con_error_y_exit_1(raw_matches_csv, tmp_path, caplog):
+    with pytest.raises(SystemExit) as excinfo:
+        cli.main(["predict", "--input", str(raw_matches_csv), "--model", str(tmp_path / "no.joblib"),
+                  "--output", str(tmp_path / "p.csv")])
+
+    assert excinfo.value.code == 1
+    assert "No existe el modelo" in caplog.text
+
+
+def test_cli_cliente_hf_sin_token_termina_con_error_y_exit_1(raw_matches_csv, trained, tmp_path, monkeypatch):
+    model_path, _, _ = trained
+    monkeypatch.setenv("HF_TOKEN", "")  # vacío: ni el entorno ni un .env local aportan token
+
+    with pytest.raises(SystemExit) as excinfo:
+        cli.main(["predict", "--input", str(raw_matches_csv), "--model", str(model_path),
+                  "--output", str(tmp_path / "p.csv"), "--client", "hf"])
+
+    assert excinfo.value.code == 1
 
 
 @pytest.mark.integration

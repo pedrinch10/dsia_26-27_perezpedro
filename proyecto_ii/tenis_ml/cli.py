@@ -2,11 +2,20 @@
 
 import argparse
 import logging
+import os
 from pathlib import Path
 
 from .config import DEFAULT_DATA_PATH, DEFAULT_MODEL_PATH, DEFAULT_REPORT_PATH
-from .hf_client import get_client
+from .hf_client import HFConfigError, HFRequestError, get_client
+from .loader import DataLoadError
 from .pipeline import run_predict, run_train
+from .predict import ModelNotFoundError
+from .train import TrainingError
+
+logger = logging.getLogger(__name__)
+
+# Errores esperables (datos, modelo, configuración): mensaje claro y exit 1, sin traceback.
+EXPECTED_ERRORS = (DataLoadError, ModelNotFoundError, TrainingError, HFConfigError, HFRequestError)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -29,16 +38,21 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> None:
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    level = os.getenv("LOG_LEVEL", "INFO").upper()
+    logging.basicConfig(level=level, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     args = build_parser().parse_args(argv)
 
-    if args.command == "train":
-        metrics = run_train(args.input, args.model, args.report)
-        print(f"Accuracy: {metrics['accuracy']:.3f} | F1: {metrics['f1']:.3f} | "
-              f"Baseline (mejor ranking): {metrics['baseline_accuracy_better_rank']:.3f}")
-    else:
-        client = get_client(args.client)
-        run_predict(args.input, args.model, args.output, client, args.season, args.explain)
+    try:
+        if args.command == "train":
+            metrics = run_train(args.input, args.model, args.report)
+            print(f"Accuracy: {metrics['accuracy']:.3f} | F1: {metrics['f1']:.3f} | "
+                  f"Baseline (mejor ranking): {metrics['baseline_accuracy_better_rank']:.3f}")
+        else:
+            client = get_client(args.client)
+            run_predict(args.input, args.model, args.output, client, args.season, args.explain)
+    except EXPECTED_ERRORS as error:
+        logger.error("%s", error)
+        raise SystemExit(1) from error
 
 
 if __name__ == "__main__":
